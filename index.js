@@ -2,7 +2,8 @@ import express from "express";
 import cors from "cors";
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
-import { roomsRouter } from "./rooms.js";
+import { roomsRouter } from "./routes/rooms.js";
+import { roomsbookingRouter } from "./routes/roombooking.js";
 
 dotenv.config();
 const port = process.env.PORT;
@@ -43,6 +44,97 @@ const rooms = [
     }
 ]
 
+const booking_data = [
+    {
+        "id": "100",
+        "customer_name": "John",
+        "date": "03/15/2022",
+        "start_time": "9AM",
+        "end_time": "12PM",
+        "room_name": "Mercury"
+    },
+    {
+        "id": "101",
+        "customer_name": "Vijay",
+        "date": "03/17/2022",
+        "start_time": "10AM",
+        "end_time": "3PM",
+        "room_name": "Venus"
+    },
+    {
+        "id": "102",
+        "customer_name": "Jennifer",
+        "date": "03/18/2022",
+        "start_time": "10.30AM",
+        "end_time": "5AM",
+        "room_name": "Earth"
+    },
+    {
+        "id": "103",
+        "customer_name": "Francis",
+        "date": "03/20/2022",
+        "start_time": "5PM",
+        "end_time": "10PM",
+        "room_name": "Mars"
+    },
+    {
+        "id": "104",
+        "customer_name": "Charles",
+        "date": "03/22/2022",
+        "start_time": "9AM",
+        "end_time": "11AM",
+        "room_name": "Jupiter"
+    }
+]
+
+const booked_data = [
+    {
+        "id": "100",
+        "room_name": "Mercury",
+        "booked_status": "Engaged",
+        "customer_name": "John",
+        "date": "03/15/2022",
+        "start_time": "9AM",
+        "end_time": "12PM"
+    },
+    {
+        "id": "101",
+        "room_name": "Venus",
+        "booked_status": "Engaged",
+        "customer_name": "Vijay",
+        "date": "03/17/2022",
+        "start_time": "10AM",
+        "end_time": "3PM"
+    },
+    {
+        "id": "102",
+        "room_name": "Earth",
+        "booked_status": "Engaged",
+        "customer_name": "Jennifer",
+        "date": "03/18/2022",
+        "start_time": "10.30AM",
+        "end_time": "5AM"
+    },
+    {
+        "id": "103",
+        "room_name": "Mars",
+        "booked_status": "Engaged",
+        "customer_name": "Francis",
+        "date": "03/20/2022",
+        "start_time": "5PM",
+        "end_time": "10PM"
+    },
+    {
+        "id": "104",
+        "room_name": "Jupiter",
+        "booked_status": "Engaged",
+        "customer_name": "Charles",
+        "date": "03/22/2022",
+        "start_time": "9AM",
+        "end_time": "11AM"
+    }
+]
+
 const MONGO_URL = process.env.MONGO_URL;
 
 async function createConnection() {
@@ -58,6 +150,8 @@ app.get("/", function (req, res){
 })
 
 app.use("/rooms", roomsRouter);
+
+app.use("/rooms-booking", roomsbookingRouter);
 
 app.listen(port, () => {
     console.log(`Server started in ${port}`);
