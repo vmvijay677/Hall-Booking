@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
-import { roomsDataRouter } from "./rooms-data.js";
+import { roomsRouter } from "./rooms.js";
 
 dotenv.config();
 const port = process.env.PORT;
@@ -53,7 +53,7 @@ async function createConnection() {
 }
 export const client = await createConnection();
 
-app.use("/rooms-data", roomsDataRouter);
+app.use("/rooms", roomsRouter);
 
 app.listen(port, () => {
     console.log(`Server started in ${port}`);

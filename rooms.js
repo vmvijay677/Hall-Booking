@@ -1,8 +1,9 @@
 import express from "express";
+import { client } from "./index.js"
 
 const router = express.Router();
 
-router.get("/rooms-data", async function (req, res) {
+router.get("/", async function (req, res) {
     const rooms = await client
         .db("b30wd")
         .collection("rooms")
@@ -11,7 +12,7 @@ router.get("/rooms-data", async function (req, res) {
     res.send(rooms);
 });
 
-router.get("/rooms-data/:id", async function (req, res) {
+router.get("/:id", async function (req, res) {
     const { id } = req.params;
     const rooms = await client
         .db("b30wd")
@@ -20,7 +21,7 @@ router.get("/rooms-data/:id", async function (req, res) {
     rooms ? res.send(rooms) : res.status(404).send({ message: "Invalid room name" });
 });
 
-router.post("/rooms-data", async function (req, res) {
+router.post("/", async function (req, res) {
     const data = req.body;
     const result = await client
         .db("b30wd")
@@ -29,7 +30,7 @@ router.post("/rooms-data", async function (req, res) {
     res.send(result);
 });
 
-router.put("/rooms-data/:id", async function (req, res) {
+router.put("/:id", async function (req, res) {
     const { id } = req.params;
     const updatedRoom = req.body;
     const result = await client
@@ -39,7 +40,7 @@ router.put("/rooms-data/:id", async function (req, res) {
     res.send(result);
 });
 
-router.delete("/rooms-data/:id", async function (req, res) {
+router.delete("/:id", async function (req, res) {
     const { id } = req.params;
     const result = await client
         .db("b30wd")
@@ -48,4 +49,4 @@ router.delete("/rooms-data/:id", async function (req, res) {
     res.send(result);
 });
 
-export const roomsDataRouter = router;
+export const roomsRouter = router;
